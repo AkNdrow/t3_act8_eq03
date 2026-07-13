@@ -1,19 +1,37 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+const USER_STORAGE_KEY = 'clevernote_user';
+
+function getStoredUser() {
+  try {
+    const savedUser = window.localStorage.getItem(USER_STORAGE_KEY);
+    return savedUser ? JSON.parse(savedUser) : null;
+  } catch {
+    return null;
+  }
+}
 
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const [loading, setLoading] = useState(false);
-  
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedUser = getStoredUser();
+    if (storedUser?.token) {
+      
+navigate('/dashboard', { replace: true });
+    }
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMsg('');
-    
-    // Validación de que no estén vacíos
+
     if (!username || !password) {
       setErrorMsg('Por favor, completa todos los campos.');
       return;
@@ -21,34 +39,31 @@ function Login() {
 
     setLoading(true);
 
-    try {
-      const response = await fetch('https://dummyjson.com/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          username,
-          password,
-          expiresInMins: 60, 
-        })
-      });
+    
+    const USUARIO_VALIDO = 'Moises'; 
+    const PASSWORD_VALIDO = '12345';
 
-      const data = await response.json();
+    setTimeout(() => {
+      if (username === USUARIO_VALIDO && password === PASSWORD_VALIDO) {
+        const sessionData = {
+          token: 'token-simulado-fase2-xyz123',
+          id: 99,
+          username: username,
+          email: `${username}@correo.com`,
+          firstName: 'Moises',
+          lastName: 'Pascual',
+          image: 'https://placehold.co/48x48', 
+        };
 
-      if (response.ok) {
-        console.log('Respuesta de la API (Usuario logueado):', data);
-        // Si es exitoso, redirigimos a /dashboard
-        navigate('/dashboard');
+        window.localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(sessionData));
+        setLoading(false);
+        
+navigate('/dashboard', { replace: true });
       } else {
-        // DummyJSON retorna un mensaje de error si falla
-        console.error('Error del servidor:', data.message);
+        setLoading(false);
         setErrorMsg('Usuario o contraseña incorrectos.');
       }
-    } catch (error) {
-      console.error('Error de red:', error);
-      setErrorMsg('Ocurrió un error de red. Intenta de nuevo.');
-    } finally {
-      setLoading(false);
-    }
+    }, 500); // Simulamos una pequeña carga de medio segundo
   };
 
   return (
@@ -56,14 +71,14 @@ function Login() {
       <div className="login-container">
         <h2 className="login-title">Inicio de Sesión</h2>
         <p className="login-subtitle">Ingresa tus credenciales para continuar</p>
-        
+
         <form onSubmit={handleSubmit} className="login-form">
           <div className="input-group">
             <label htmlFor="username">Usuario o Correo</label>
-            <input 
+            <input
               id="username"
-              type="text" 
-              placeholder="ej. emilys"
+              type="text"
+              placeholder="ej. andres"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               className={errorMsg && !username ? 'input-error' : ''}
@@ -72,26 +87,21 @@ function Login() {
 
           <div className="input-group">
             <label htmlFor="password">Contraseña</label>
-            <input 
+            <input
               id="password"
-              type="password" 
-              placeholder="ej. emilyspass"
+              type="password"
+              placeholder="ej. 12345"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className={errorMsg && !password ? 'input-error' : ''}
             />
           </div>
 
-          {/* Mensaje de error de validación/API */}
           <div className="error-container">
             {errorMsg && <p className="error-text">{errorMsg}</p>}
           </div>
 
-          <button 
-            type="submit" 
-            className="login-btn"
-            disabled={loading}
-          >
+          <button type="submit" className="login-btn" disabled={loading}>
             {loading ? 'Iniciando...' : 'Iniciar Sesión'}
           </button>
         </form>
