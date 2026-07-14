@@ -39,7 +39,49 @@ navigate('/dashboard', { replace: true });
 
     setLoading(true);
 
-    // Simularemos la respuesta de una API para validar a los 2 usuarios específicos
+    // ENFOQUE HÍBRIDO: Validar mediante API Externa (reqres.in)
+    if (username.toLowerCase() === 'eve.holt@reqres.in') {
+      try {
+        const response = await fetch('https://reqres.in/api/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: username,
+            password: password,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          // La API devolvió un token real
+          const sessionData = {
+            token: data.token, // Token proporcionado por Reqres
+            id: 99,
+            username: 'Eve Holt',
+            email: username,
+            firstName: 'Eve',
+            lastName: 'Holt',
+            image: 'https://reqres.in/img/faces/4-image.jpg',
+          };
+          window.localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(sessionData));
+          setLoading(false);
+          navigate('/dashboard', { replace: true });
+        } else {
+          // La API rechazó el login (ej. falta contraseña o usuario inválido)
+          setLoading(false);
+          setErrorMsg(data.error || 'Credenciales rechazadas por la API externa.');
+        }
+      } catch (error) {
+        setLoading(false);
+        setErrorMsg('Error de conexión con la API externa.');
+      }
+      return; // Terminamos aquí si usó el correo de la API
+    }
+
+    // ENFOQUE HÍBRIDO: Validación Local para usuarios existentes
     setTimeout(() => {
       const isValidAndres = username === 'Andres' && password === 'Admin123';
       const isValidMoises = username === 'Moises' && password === 'Admin456';
@@ -63,7 +105,7 @@ navigate('/dashboard', { replace: true });
         setLoading(false);
         setErrorMsg('Usuario o contraseña incorrectos.');
       }
-    }, 800); // Simulamos el tiempo de respuesta de red de una API
+    }, 800);
   };
 
   return (
