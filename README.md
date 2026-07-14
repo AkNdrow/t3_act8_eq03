@@ -11,11 +11,8 @@ Este proyecto es un prototipo desarrollado en React (utilizando Vite) que incluy
 - **API utilizada para la tabla de datos:** JSONPlaceholder (https://jsonplaceholder.typicode.com/users) para la simulación inicial, además de generación de datos en JSON local.
 - **Enlace al proyecto desplegado:** http://IP_DE_SU_VPS/t3_act8_eq03
 
-## 🔐 Sistema de Autenticación Híbrido
-Este prototipo demuestra la capacidad de validar credenciales de dos maneras distintas:
-1. **Validación Local (Simulada):** Si ingresas con los usuarios locales (`Andres` o `Moises`), el sistema los valida de forma rápida y estática. Ideal para probar la interfaz rápidamente.
-2. **Validación por API Externa (JSONPlaceholder):** Si ingresas cualquier correo válido de prueba (ej. `Sincere@april.biz`) y cualquier texto en la contraseña, la página hace una petición HTTP `GET` a la API pública de JSONPlaceholder (`https://jsonplaceholder.typicode.com/users`). Si la API valida que el correo existe en su base de datos, extraemos la información real de la API y permitimos el acceso, demostrando una integración real completamente gratuita y sin configuraciones complejas de API Keys.
-
+## 📚 Documentación de APIs y Login Híbrido
+Toda la documentación sobre las APIs utilizadas para popular la tabla de datos y el funcionamiento de nuestro sistema de **Autenticación Híbrida** con JSONPlaceholder se encuentra en el archivo [API.md](./API.md).
 ---
 
 ## 🚀 Cómo ejecutarlo en tu computadora (Local)
