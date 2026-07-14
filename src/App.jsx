@@ -8,8 +8,9 @@ import Almacenes from './pages/Almacenes';
 import TareasCompletadas from './pages/TareasCompletadas';
 
 function App() {
+  const base = '/t3_act8_eq03';
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={base}>
       <Routes>
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/login" element={<Login />} />

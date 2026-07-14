@@ -6,6 +6,11 @@ Este proyecto es un prototipo desarrollado en React (utilizando Vite) que incluy
 - Una tabla interactiva (CRUD) con paginación para gestionar registros (Almacenes y Tareas).
 - Persistencia de datos local utilizando `localStorage`.
 
+## Datos de Entrega
+- **Integrantes del Equipo:** [Nombre del Integrante 1], [Nombre del Integrante 2]
+- **API utilizada para la tabla de datos:** JSONPlaceholder (https://jsonplaceholder.typicode.com/users) para la simulación inicial, además de generación de datos en JSON local.
+- **Enlace al proyecto desplegado:** http://IP_DE_SU_VPS/t3_act8_eq03
+
 ---
 
 ## 🚀 Cómo ejecutarlo en tu computadora (Local)
@@ -87,16 +92,12 @@ Le tenemos que decir a Nginx dónde encontrar los archivos de tu proyecto web (l
        listen 80 default_server;
        listen [::]:80 default_server;
 
-       # La ruta a la carpeta "dist" de tu proyecto. 
-       # ¡Revisa que el nombre de la carpeta t3_act8_eq03 coincida!
-       root /var/www/t3_act8_eq03/dist;
-       index index.html index.htm;
-
        server_name _;
 
-       location / {
-           # Esto es crucial para React/Vite (React Router)
-           try_files $uri $uri/ /index.html;
+       # Servir tu app en la subcarpeta que pide la actividad
+       location /t3_act8_eq03 {
+           alias /var/www/t3_act8_eq03/dist;
+           try_files $uri $uri/ /t3_act8_eq03/index.html;
        }
    }
    ```
