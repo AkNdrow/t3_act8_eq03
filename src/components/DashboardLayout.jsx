@@ -5,11 +5,11 @@ import Navbar from './Navbar';
 
 function DashboardLayout() {
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', fontFamily: 'sans-serif' }}>
+    <div className="dashboard-layout">
       <Sidebar />
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         <Navbar />
-        <main style={{ padding: '20px', flex: 1, backgroundColor: '#f4f6f9' }}>
+        <main style={{ padding: '30px', flex: 1 }}>
           <Outlet />
         </main>
       </div>

@@ -39,31 +39,31 @@ navigate('/dashboard', { replace: true });
 
     setLoading(true);
 
-    
-    const USUARIO_VALIDO = 'Moises'; 
-    const PASSWORD_VALIDO = '12345';
-
+    // Simularemos la respuesta de una API para validar a los 2 usuarios específicos
     setTimeout(() => {
-      if (username === USUARIO_VALIDO && password === PASSWORD_VALIDO) {
+      const isValidAndres = username === 'Andres' && password === 'Admin123';
+      const isValidMoises = username === 'Moises' && password === 'Admin456';
+
+      if (isValidAndres || isValidMoises) {
         const sessionData = {
-          token: 'token-simulado-fase2-xyz123',
-          id: 99,
+          token: `token-simulado-fase2-${username.toLowerCase()}`,
+          id: isValidAndres ? 1 : 2,
           username: username,
-          email: `${username}@correo.com`,
-          firstName: 'Moises',
-          lastName: 'Pascual',
+          email: `${username.toLowerCase()}@correo.com`,
+          firstName: username,
+          lastName: 'Usuario',
           image: 'https://placehold.co/48x48', 
         };
 
         window.localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(sessionData));
         setLoading(false);
         
-navigate('/dashboard', { replace: true });
+        navigate('/dashboard', { replace: true });
       } else {
         setLoading(false);
         setErrorMsg('Usuario o contraseña incorrectos.');
       }
-    }, 500); // Simulamos una pequeña carga de medio segundo
+    }, 800); // Simulamos el tiempo de respuesta de red de una API
   };
 
   return (
