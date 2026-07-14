@@ -8,7 +8,7 @@ Este proyecto es un prototipo desarrollado en React (utilizando Vite) que incluy
 
 ## Datos de Entrega
 - **Integrantes del Equipo:** [Nombre del Integrante 1], [Nombre del Integrante 2]
-- **API utilizada para la tabla de datos:** JSONPlaceholder (https://jsonplaceholder.typicode.com/users) para la simulación inicial, además de generación de datos en JSON local.
+- **API utilizada para la tabla de datos:** DummyJSON (https://dummyjson.com/products) para las operaciones CRUD.
 - **Enlace al proyecto desplegado:** http://IP_DE_SU_VPS/t3_act8_eq03
 
 ## 📚 Documentación de APIs y Login Híbrido
