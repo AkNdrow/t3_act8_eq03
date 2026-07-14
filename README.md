@@ -11,6 +11,11 @@ Este proyecto es un prototipo desarrollado en React (utilizando Vite) que incluy
 - **API utilizada para la tabla de datos:** JSONPlaceholder (https://jsonplaceholder.typicode.com/users) para la simulación inicial, además de generación de datos en JSON local.
 - **Enlace al proyecto desplegado:** http://IP_DE_SU_VPS/t3_act8_eq03
 
+## 🔐 Sistema de Autenticación Híbrido
+Este prototipo demuestra la capacidad de validar credenciales de dos maneras distintas:
+1. **Validación Local (Simulada):** Si ingresas con los usuarios locales (`Andres` o `Moises`), el sistema los valida de forma rápida y estática. Ideal para probar la interfaz rápidamente.
+2. **Validación por API Externa (Reqres.in):** Si ingresas el correo `eve.holt@reqres.in` (con cualquier texto en la contraseña), la página hace una petición HTTP `POST` a la API pública de Reqres (`https://reqres.in/api/login`). Si la API valida el acceso, devuelve un **Token**, el cual guardamos en `localStorage` demostrando una integración real sin necesidad de configurar *API Keys* (ya que Reqres es gratuita y abierta para pruebas).
+
 ---
 
 ## 🚀 Cómo ejecutarlo en tu computadora (Local)
