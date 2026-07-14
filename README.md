@@ -14,7 +14,7 @@ Este proyecto es un prototipo desarrollado en React (utilizando Vite) que incluy
 ## 🔐 Sistema de Autenticación Híbrido
 Este prototipo demuestra la capacidad de validar credenciales de dos maneras distintas:
 1. **Validación Local (Simulada):** Si ingresas con los usuarios locales (`Andres` o `Moises`), el sistema los valida de forma rápida y estática. Ideal para probar la interfaz rápidamente.
-2. **Validación por API Externa (Reqres.in):** Si ingresas el correo `eve.holt@reqres.in` (con cualquier texto en la contraseña), la página hace una petición HTTP `POST` a la API pública de Reqres (`https://reqres.in/api/login`). Si la API valida el acceso, devuelve un **Token**, el cual guardamos en `localStorage` demostrando una integración real sin necesidad de configurar *API Keys* (ya que Reqres es gratuita y abierta para pruebas).
+2. **Validación por API Externa (JSONPlaceholder):** Si ingresas cualquier correo válido de prueba (ej. `Sincere@april.biz`) y cualquier texto en la contraseña, la página hace una petición HTTP `GET` a la API pública de JSONPlaceholder (`https://jsonplaceholder.typicode.com/users`). Si la API valida que el correo existe en su base de datos, extraemos la información real de la API y permitimos el acceso, demostrando una integración real completamente gratuita y sin configuraciones complejas de API Keys.
 
 ---
 

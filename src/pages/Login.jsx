@@ -39,49 +39,41 @@ navigate('/dashboard', { replace: true });
 
     setLoading(true);
 
-    // ENFOQUE HÍBRIDO: Validar mediante API Externa (reqres.in)
-    if (username.toLowerCase() === 'eve.holt@reqres.in') {
+    // ENFOQUE HÍBRIDO: Validar mediante API Externa (JSONPlaceholder)
+    // Para probarlo, usa un email válido de JSONPlaceholder, por ejemplo: Sincere@april.biz
+    if (username.includes('@')) {
       try {
-        const response = await fetch('https://reqres.in/api/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: username,
-            password: password,
-          }),
-        });
-
+        const response = await fetch(`https://jsonplaceholder.typicode.com/users?email=${username}`);
         const data = await response.json();
 
-        if (response.ok) {
-          // La API devolvió un token real
+        if (response.ok && data.length > 0) {
+          // La API encontró al usuario (Login Exitoso)
+          const apiUser = data[0];
           const sessionData = {
-            token: data.token, // Token proporcionado por Reqres
-            id: 99,
-            username: 'Eve Holt',
-            email: username,
-            firstName: 'Eve',
-            lastName: 'Holt',
-            image: 'https://reqres.in/img/faces/4-image.jpg',
+            token: `token-jsonplaceholder-${apiUser.id}`,
+            id: apiUser.id,
+            username: apiUser.username,
+            email: apiUser.email,
+            firstName: apiUser.name.split(' ')[0],
+            lastName: apiUser.name.split(' ')[1] || '',
+            image: `https://placehold.co/48x48?text=${apiUser.name.charAt(0)}`,
           };
           window.localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(sessionData));
           setLoading(false);
           navigate('/dashboard', { replace: true });
         } else {
-          // La API rechazó el login (ej. falta contraseña o usuario inválido)
+          // La API no encontró el correo
           setLoading(false);
-          setErrorMsg(data.error || 'Credenciales rechazadas por la API externa.');
+          setErrorMsg('El correo no existe en la API externa de JSONPlaceholder.');
         }
       } catch (error) {
         setLoading(false);
         setErrorMsg('Error de conexión con la API externa.');
       }
-      return; // Terminamos aquí si usó el correo de la API
+      return; // Terminamos aquí si usó formato de correo
     }
 
-    // ENFOQUE HÍBRIDO: Validación Local para usuarios existentes
+    // ENFOQUE HÍBRIDO: Validación Local para usuarios existentes (Andres, Moises)
     setTimeout(() => {
       const isValidAndres = username === 'Andres' && password === 'Admin123';
       const isValidMoises = username === 'Moises' && password === 'Admin456';
